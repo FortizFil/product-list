@@ -100,7 +100,7 @@ const LoginForm = () => {
         initialValues={{
           email: "",
           password: "",
-          rememberMe: false,
+          rememberMe: true,
         }}
         validationSchema={loginSchema}
         onSubmit={submitForm}

@@ -5,8 +5,7 @@ export const AuthAPI = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "http://dummy-api.d0.acom.cloud",
     prepareHeaders: (headers, { getState }) => {
-      const token = getState().auth.token;
-      // If we have a token set in state, let's assume that we should be passing it.
+      const token = getState().auth.token || localStorage.getItem("token");
       if (token) {
         headers.set("authorization", `Bearer ${token}`);
       }
@@ -14,16 +13,32 @@ export const AuthAPI = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Auth"],
+  tagTypes: ["Auth", "Products"],
   endpoints: (builder) => ({
     login: builder.mutation({
       query: (values) => ({
         url: `/api/auth/login?email=${values.email}&password=${values.password}`,
         method: "POST",
       }),
+      invalidatesTags: ["Auth"],
     }),
-    providesTags: ["Auth"],
+    refreshToken: builder.mutation({
+      query: () => ({
+        url: `/api/auth/refresh`,
+        method: "POST",
+      }),
+      invalidatesTags: ["Auth"],
+    }),
+    getUser: builder.query({
+      query: () => "/api/auth/user-profile",
+      providesTags: ["Auth"],
+    }),
+    getProducts: builder.query({
+      query: (values) => `/api/products?page=${values.page}`,
+      providesTags: ["Products"],
+    }),
   }),
 });
 
-export const { useLoginMutation } = AuthAPI;
+export const { useLoginMutation, useGetProductsQuery, useGetUserQuery, useRefreshTokenMutation } =
+  AuthAPI;

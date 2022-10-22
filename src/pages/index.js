@@ -1,14 +1,19 @@
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import * as path from "../constans/route";
-import LoginPage from "./LoginPage";
+
+const LoginPage = lazy(() => import("./LoginPage"));
+const ProductPage = lazy(() => import("./ProductPage"));
 
 const AppRoutes = () => {
   return (
-    <Routes>
-      <Route path={path.LOGIN_PAGE} element={<LoginPage />} />
-    </Routes>
+    <Suspense fallback={<p>Loading...</p>}>
+      <Routes>
+        <Route path="/" element={<LoginPage />} />
+        <Route path={path.PRODUCT_PAGE} element={<ProductPage />} />
+      </Routes>
+    </Suspense>
   );
 };
 

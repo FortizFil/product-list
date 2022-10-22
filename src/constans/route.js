@@ -1,1 +1,1 @@
-export const LOGIN_PAGE = "/login";
+export const PRODUCT_PAGE = "/product";
