@@ -1,7 +1,9 @@
 import React from "react";
 
+import AppRoutes from "./pages";
+
 function App() {
-  return <h1>Hello</h1>;
+  return <AppRoutes />;
 }
 
 export default App;
