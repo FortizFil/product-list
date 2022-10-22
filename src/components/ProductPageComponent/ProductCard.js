@@ -1,8 +1,8 @@
 import React from "react";
-import Typography from "@mui/material/Typography";
 
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
+import Typography from "@mui/material/Typography";
 
 const Card = styled(Box)(() => ({
   outline: "1px solid #1976d2",

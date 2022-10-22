@@ -22,23 +22,17 @@ export const AuthAPI = createApi({
       }),
       invalidatesTags: ["Auth"],
     }),
-    refreshToken: builder.mutation({
-      query: () => ({
-        url: `/api/auth/refresh`,
-        method: "POST",
-      }),
-      invalidatesTags: ["Auth"],
-    }),
     getUser: builder.query({
       query: () => "/api/auth/user-profile",
       providesTags: ["Auth"],
     }),
     getProducts: builder.query({
-      query: (values) => `/api/products?page=${values.page}`,
+      query: (values) =>
+        `/api/products?page=${values.page}&title=${values.title}&price_from=${values.priceFrom}&price_to=${values.priceTo}&from=${values.startDate}&to=${values.endDate}`,
       providesTags: ["Products"],
     }),
   }),
 });
 
-export const { useLoginMutation, useGetProductsQuery, useGetUserQuery, useRefreshTokenMutation } =
+export const { useLoginMutation, useGetProductsQuery, useGetUserQuery } =
   AuthAPI;
