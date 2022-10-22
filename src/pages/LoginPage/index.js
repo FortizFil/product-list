@@ -1,8 +1,9 @@
 import React from "react";
 
-const LoginPage = () => {
-  return <h1>Login Page</h1>;
-};
+import LoginPageComponent from "../../components/LoginPageComponent";
 
+const LoginPage = () => {
+  return <LoginPageComponent />;
+};
 
 export default LoginPage;
