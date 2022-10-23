@@ -4,11 +4,9 @@ import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 
+import PriceFilter from "./Filters/PriceFilter";
+import DateFilter from "./Filters/DateFilter";
 import TitleFilter from "./Filters/TitleFilter";
-import DateToFilter from "./Filters/DateToFilter";
-import PriceToFilter from "./Filters/PriceToFilter";
-import DateFromFilter from "./Filters/DateFromFilter";
-import PriceFromFilter from "./Filters/PriceFromFilter";
 
 const BlockWrap = styled(Box)(() => ({
   width: "1200px",
@@ -43,15 +41,15 @@ const ManageBlock = () => {
       <Box>
         <Title>Price</Title>
         <SubWrap>
-          <PriceFromFilter />
-          <PriceToFilter />
+          <PriceFilter itsFrom={true} />
+          <PriceFilter itsFrom={false} />
         </SubWrap>
       </Box>
       <Box>
         <Title>Date</Title>
         <SubWrap>
-          <DateFromFilter />
-          <DateToFilter />
+          <DateFilter itsFrom={true} />
+          <DateFilter itsFrom={false} />
         </SubWrap>
       </Box>
     </BlockWrap>
