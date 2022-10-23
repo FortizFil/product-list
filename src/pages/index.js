@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { Routes, Route, Navigate } from "react-router-dom";
 
 import * as path from "../constans/route";
+import Loader from "../components/Loader";
 
 const LoginPage = lazy(() => import("./LoginPage"));
 const ProductPage = lazy(() => import("./ProductPage"));
@@ -28,7 +29,7 @@ const AppRoutes = () => {
   const { user } = useSelector((state) => state.auth);
   console.log(user);
   return (
-    <Suspense fallback={<p>Loading...</p>}>
+    <Suspense fallback={<Loader />}>
       <Routes>
         <Route
           path="/"

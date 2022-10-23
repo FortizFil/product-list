@@ -5,16 +5,20 @@ import AppRoutes from "./pages";
 import ErrorAlert from "./components/ErrorAlert";
 import { useGetUserQuery } from "./services/AuthAPI";
 import { setUser } from "./redux/auth";
+import Loader from "./components/Loader";
 
 function App() {
   const error = useSelector((state) => state.error);
-  const { data } = useGetUserQuery();
-
+  const { data, isLoading } = useGetUserQuery();
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(setUser(data));
   }, [data, dispatch]);
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <>
