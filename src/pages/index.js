@@ -5,6 +5,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import * as path from "../constans/route";
 import Loader from "../components/Loader";
 
+
 const LoginPage = lazy(() => import("./LoginPage"));
 const ProductPage = lazy(() => import("./ProductPage"));
 
@@ -17,7 +18,6 @@ const ProtectedRoute = ({ user, redirectPath = "/", children }) => {
 };
 
 const PublickRoute = ({ user, redirectPath, children }) => {
-  console.log(redirectPath);
   if (user) {
     return <Navigate to={redirectPath} replace />;
   }
@@ -27,7 +27,7 @@ const PublickRoute = ({ user, redirectPath, children }) => {
 
 const AppRoutes = () => {
   const { user } = useSelector((state) => state.auth);
-  console.log(user);
+
   return (
     <Suspense fallback={<Loader />}>
       <Routes>
