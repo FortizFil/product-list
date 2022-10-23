@@ -24,7 +24,7 @@ const ProductCard = ({ product }) => {
         height="250px"
         width="250px"
       />
-      <Box sx={{}}>
+      <Box>
         <Typography>{product.title}</Typography>
         <Price>Price: {product.price}</Price>
       </Box>

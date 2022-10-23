@@ -44,12 +44,8 @@ const Label = styled(InputLabel)(() => ({
 
 const Input = styled(OutlinedInput)(() => ({
   width: "100%",
-
-  "& .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input": {
-    padding: "5px 10px",
-  },
-  "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
-    padding: "5px 10px",
+  "& input": {
+    padding: "5px 10px !important",
   },
 }));
 

@@ -9,8 +9,8 @@ import { changeTitle } from "../../../redux/filters";
 const NameInput = styled(OutlinedInput)(() => ({
   width: "300px",
 
-  "& .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input": {
-    padding: "5px 10px",
+  "& input": {
+    padding: "5px 10px !important",
   },
 }));
 

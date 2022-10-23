@@ -22,8 +22,8 @@ const MainWrap = styled(Box)(() => ({
 const DateInput = styled(OutlinedInput)(() => ({
   width: "150px",
 
-  "& .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input": {
-    padding: "5px 5px",
+  "& input": {
+    padding: "5px 5px !important",
   },
 }));
 
