@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import moment from "moment/moment";
 
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
@@ -8,6 +9,8 @@ import Pagination from "@mui/material/Pagination";
 import ProductCard from "./ProductCard";
 import ManageBlock from "./ManageBlock";
 import { useGetProductsQuery } from "../../services/API";
+import { changeCurrentPage } from "../../redux/filters";
+import useDebounce from "../../utils/useDebounce";
 
 const PageWrap = styled(Box)(() => ({
   height: "100vh",
@@ -33,13 +36,20 @@ const StuledPagination = styled(Pagination)(() => ({
 
 const ProductPageComponent = () => {
   const [pages, setPages] = useState(1);
-  const [currentPage, setCurrentPage] = useState(1);
   const [products, setProducts] = useState(null);
-  const state = useSelector((state) => state.filters);
-  const { data, refetch } = useGetProductsQuery({
+
+  const { currentPage, title, priceFrom, priceTo, startDate, endDate } =
+    useSelector((state) => state.filters);
+
+  const { data } = useGetProductsQuery({
     page: currentPage,
-    ...state,
+    title: useDebounce(title, 500),
+    priceFrom: useDebounce(priceFrom, 500),
+    priceTo: useDebounce(priceTo, 500),
+    startDate: startDate,
+    endDate: endDate ? moment(endDate).format("YYYY-MM-DD") : "",
   });
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (data) {
@@ -49,12 +59,12 @@ const ProductPageComponent = () => {
   }, [data]);
 
   const handleChangePage = (event, value) => {
-    setCurrentPage(value);
+    dispatch(changeCurrentPage(value));
   };
 
   return (
     <PageWrap>
-      <ManageBlock refetch={refetch} />
+      <ManageBlock />
       {products && (
         <>
           <CardsWrap>
