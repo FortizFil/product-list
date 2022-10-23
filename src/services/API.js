@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-export const AuthAPI = createApi({
-  reducerPath: "AuthAPI",
+export const API = createApi({
+  reducerPath: "API",
   baseQuery: fetchBaseQuery({
     baseUrl: "http://dummy-api.d0.acom.cloud",
     prepareHeaders: (headers, { getState }) => {
@@ -22,6 +22,13 @@ export const AuthAPI = createApi({
       }),
       invalidatesTags: ["Auth"],
     }),
+    logOut: builder.mutation({
+      query: () => ({
+        url: "/api/auth/logout",
+        method: "POST",
+      }),
+      invalidatesTags: ["Auth"],
+    }),
     getUser: builder.query({
       query: () => "/api/auth/user-profile",
       providesTags: ["Auth"],
@@ -34,5 +41,9 @@ export const AuthAPI = createApi({
   }),
 });
 
-export const { useLoginMutation, useGetProductsQuery, useGetUserQuery } =
-  AuthAPI;
+export const {
+  useLoginMutation,
+  useLogOutMutation,
+  useGetProductsQuery,
+  useGetUserQuery,
+} = API;

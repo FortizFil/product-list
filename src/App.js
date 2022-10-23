@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import AppRoutes from "./pages";
 import ErrorAlert from "./components/ErrorAlert";
-import { useGetUserQuery } from "./services/AuthAPI";
+import { useGetUserQuery } from "./services/API";
 import { setUser } from "./redux/auth";
 import Loader from "./components/Loader";
 

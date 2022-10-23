@@ -17,7 +17,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import FormControlLabel from "@mui/material/FormControlLabel";
 
 import { loginSchema } from "./validation";
-import { useLoginMutation } from "../../../services/AuthAPI";
+import { useLoginMutation } from "../../../services/API";
 import { saveUserInfo } from "../../../redux/auth";
 import { setError } from "../../../redux/error";
 

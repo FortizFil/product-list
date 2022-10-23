@@ -8,6 +8,7 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { saveUserInfo } from "../../redux/auth";
+import { useLogOutMutation } from "../../services/API";
 
 const MainWrap = styled(Box)(() => ({
   width: "100%",
@@ -43,10 +44,16 @@ const UserName = styled(Typography)(() => ({
 const Header = () => {
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const [logOut] = useLogOutMutation();
 
   const handleLogOut = () => {
-    localStorage.removeItem("token");
-    dispatch(saveUserInfo({ access_token: null, user: null }));
+    try {
+      logOut();
+      localStorage.removeItem("token");
+      dispatch(saveUserInfo({ access_token: null, user: null }));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

@@ -7,7 +7,7 @@ import Pagination from "@mui/material/Pagination";
 
 import ProductCard from "./ProductCard";
 import ManageBlock from "./ManageBlock";
-import { useGetProductsQuery } from "../../services/AuthAPI";
+import { useGetProductsQuery } from "../../services/API";
 
 const PageWrap = styled(Box)(() => ({
   height: "100vh",
@@ -36,7 +36,10 @@ const ProductPageComponent = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [products, setProducts] = useState(null);
   const state = useSelector((state) => state.filters);
-  const { data,refetch } = useGetProductsQuery({ page: currentPage, ...state });
+  const { data, refetch } = useGetProductsQuery({
+    page: currentPage,
+    ...state,
+  });
 
   useEffect(() => {
     if (data) {
