@@ -27,6 +27,7 @@ const FormWrap = styled(Box)(() => ({
   boxSizing: "border-box",
   border: "1px solid #1976d2",
   borderRadius: "6px",
+  backgroundColor: "white",
 }));
 
 const FormField = styled(Box)(() => ({
@@ -84,6 +85,7 @@ const LoginForm = () => {
   };
 
   const submitForm = async (values) => {
+    dispatch(setError(null));
     try {
       const response = await login(values);
       dispatch(saveUserInfo(response.data));
@@ -134,7 +136,7 @@ const LoginForm = () => {
                 error={errors.password && touched.password}
                 type={showPassword ? "text" : "password"}
                 value={password}
-                placeholder={"Enter your email"}
+                placeholder={"Enter your password"}
                 onChange={(e) => setFieldValue("password", e.target.value)}
                 endAdornment={
                   <InputAdornment position="end">

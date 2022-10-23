@@ -10,6 +10,7 @@ const PageWrap = styled(Box)(() => ({
   justifyContent: "center",
   alignItems: "center",
   height: "100vh",
+  backgroundColor: "#1976d2",
 }));
 
 const LoginPageComponent = () => {

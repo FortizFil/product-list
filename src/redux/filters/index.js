@@ -31,6 +31,13 @@ export const filtersSlice = createSlice({
     changeCurrentPage: (state, { payload }) => {
       state.currentPage = payload;
     },
+    clearFilters: (state) => {
+      state.title = "";
+      state.priceFrom = "";
+      state.priceTo = "";
+      state.startDate = "";
+      state.endDate = "";
+    },
   },
 });
 
@@ -41,6 +48,7 @@ export const {
   changeStartDate,
   changeEndDate,
   changeCurrentPage,
+  clearFilters
 } = filtersSlice.actions;
 
 export default filtersSlice.reducer;

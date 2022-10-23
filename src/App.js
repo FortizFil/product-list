@@ -9,9 +9,10 @@ import Loader from "./components/Loader";
 
 function App() {
   const error = useSelector((state) => state.error);
-  const { data, isLoading } = useGetUserQuery();
+  const { data, isLoading } = useGetUserQuery("", {
+    skip: !localStorage.getItem("token"),
+  });
   const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(setUser(data));
   }, [data, dispatch]);

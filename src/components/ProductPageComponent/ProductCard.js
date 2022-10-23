@@ -5,8 +5,7 @@ import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 
 const Card = styled(Box)(() => ({
-  outline: "1px solid #1976d2",
-  borderRadius: "4px",
+  outline: "2px solid #1976d2",
   backgroundColor: "#1976d2",
   color: "white",
   textAlign: "center",

@@ -8,6 +8,7 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { saveUserInfo } from "../../redux/auth";
+import { clearFilters } from "../../redux/filters";
 import { useLogOutMutation } from "../../services/API";
 
 const MainWrap = styled(Box)(() => ({
@@ -50,7 +51,13 @@ const Header = () => {
     try {
       logOut();
       localStorage.removeItem("token");
+      sessionStorage.removeItem("title");
+      sessionStorage.removeItem("price-from");
+      sessionStorage.removeItem("price-to");
+      sessionStorage.removeItem("date-from");
+      sessionStorage.removeItem("date-to");
       dispatch(saveUserInfo({ access_token: null, user: null }));
+      dispatch(clearFilters());
     } catch (error) {
       console.log(error);
     }
