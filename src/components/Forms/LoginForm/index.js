@@ -19,6 +19,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import { loginSchema } from "./validation";
 import { useLoginMutation } from "../../../services/AuthAPI";
 import { saveUserInfo } from "../../../redux/auth";
+import { setError } from "../../../redux/error";
 
 const FormWrap = styled(Box)(() => ({
   width: "400px",
@@ -90,7 +91,7 @@ const LoginForm = () => {
         localStorage.setItem("token", response.data.access_token);
       }
     } catch (error) {
-      console.log(error);
+      dispatch(setError("Internal server error. Please try again later"));
     }
   };
 
