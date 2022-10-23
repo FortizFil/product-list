@@ -5,12 +5,14 @@ import moment from "moment/moment";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import Pagination from "@mui/material/Pagination";
+import Typography from "@mui/material/Typography";
 
 import ProductCard from "./ProductCard";
 import ManageBlock from "./ManageBlock";
+import useDebounce from "../../utils/useDebounce";
 import { useGetProductsQuery } from "../../services/API";
 import { changeCurrentPage } from "../../redux/filters";
-import useDebounce from "../../utils/useDebounce";
+import Loader from "../Loader";
 
 const PageWrap = styled(Box)(() => ({
   height: "100vh",
@@ -28,10 +30,22 @@ const CardsWrap = styled(Box)(() => ({
   boxSizing: "border-box",
 }));
 
-const StuledPagination = styled(Pagination)(() => ({
+const PaginationWrap = styled(Box)(() => ({
+  display: "flex",
+  justifyContent: "center",
   marginTop: "20px",
-  marginLeft: "auto",
-  marginRight: "auto",
+}));
+
+const NoDataWrap = styled(Box)(() => ({
+  width: "100%",
+  marginTop: "30px",
+  textAlign: "center",
+}));
+
+const NoDataText = styled(Typography)(() => ({
+  fontSize: "30px",
+  fontWeight: "bold",
+  color: "gainsboro",
 }));
 
 const ProductPageComponent = () => {
@@ -41,7 +55,7 @@ const ProductPageComponent = () => {
   const { currentPage, title, priceFrom, priceTo, startDate, endDate } =
     useSelector((state) => state.filters);
 
-  const { data } = useGetProductsQuery({
+  const { data, isLoading } = useGetProductsQuery({
     page: currentPage,
     title: useDebounce(title, 500),
     priceFrom: useDebounce(priceFrom, 500),
@@ -62,22 +76,36 @@ const ProductPageComponent = () => {
     dispatch(changeCurrentPage(value));
   };
 
+  if (isLoading) {
+    return <Loader />;
+  }
+
   return (
     <PageWrap>
       <ManageBlock />
       {products && (
         <>
-          <CardsWrap>
-            {products.map((el) => (
-              <ProductCard key={el.id} product={el} />
-            ))}
-            <StuledPagination
-              count={pages}
-              page={currentPage}
-              onChange={handleChangePage}
-              color="primary"
-            />
-          </CardsWrap>
+          {products.length > 0 ? (
+            <>
+              <CardsWrap>
+                {products.map((el) => (
+                  <ProductCard key={el.id} product={el} />
+                ))}
+              </CardsWrap>
+              <PaginationWrap>
+                <Pagination
+                  count={pages}
+                  page={currentPage}
+                  onChange={handleChangePage}
+                  color="primary"
+                />
+              </PaginationWrap>
+            </>
+          ) : (
+            <NoDataWrap>
+              <NoDataText>No data:(</NoDataText>
+            </NoDataWrap>
+          )}
         </>
       )}
     </PageWrap>
