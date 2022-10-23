@@ -5,9 +5,9 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import * as path from "../constans/route";
 import Loader from "../components/Loader";
 
-
 const LoginPage = lazy(() => import("./LoginPage"));
 const ProductPage = lazy(() => import("./ProductPage"));
+const NotFound = lazy(() => import("./NotFound"));
 
 const ProtectedRoute = ({ user, redirectPath = "/", children }) => {
   if (!user) {
@@ -47,6 +47,7 @@ const AppRoutes = () => {
             </ProtectedRoute>
           }
         />
+        <Route path={"*"} element={<NotFound />} />
       </Routes>
     </Suspense>
   );
