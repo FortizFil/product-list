@@ -51,11 +51,6 @@ const Header = () => {
     try {
       logOut();
       localStorage.removeItem("token");
-      sessionStorage.removeItem("title");
-      sessionStorage.removeItem("price-from");
-      sessionStorage.removeItem("price-to");
-      sessionStorage.removeItem("date-from");
-      sessionStorage.removeItem("date-to");
       dispatch(saveUserInfo({ access_token: null, user: null }));
       dispatch(clearFilters());
     } catch (error) {

@@ -24,9 +24,6 @@ const PriceFilter = memo(({ itsFrom }) => {
       itsFrom
         ? dispatch(changePriceFrom(e.target.value))
         : dispatch(changePriceTo(e.target.value));
-      itsFrom
-        ? sessionStorage.setItem("price-from", e.target.value)
-        : sessionStorage.setItem("price-to", e.target.value);
     },
     [itsFrom, dispatch]
   );

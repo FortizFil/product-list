@@ -22,7 +22,6 @@ const TitleFilter = () => {
   const handleChange = useCallback(
     (e) => {
       dispatch(changeTitle(e.target.value));
-      sessionStorage.setItem("title", e.target.value);
     },
     [dispatch]
   );

@@ -1,18 +1,21 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import moment from "moment/moment";
+import qs from "qs";
 
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import Pagination from "@mui/material/Pagination";
 import Typography from "@mui/material/Typography";
 
+import Loader from "../Loader";
+import { PRODUCT_PAGE } from "../../constans/route";
 import ProductCard from "./ProductCard";
 import ManageBlock from "./ManageBlock";
 import useDebounce from "../../utils/useDebounce";
 import { useGetProductsQuery } from "../../services/API";
 import { changeCurrentPage } from "../../redux/filters";
-import Loader from "../Loader";
 
 const PageWrap = styled(Box)(() => ({
   height: "100vh",
@@ -52,6 +55,8 @@ const ProductPageComponent = () => {
   const [pages, setPages] = useState(1);
   const [products, setProducts] = useState(null);
 
+  const navigate = useNavigate();
+
   const { currentPage, title, priceFrom, priceTo, startDate, endDate } =
     useSelector((state) => state.filters);
 
@@ -64,6 +69,17 @@ const ProductPageComponent = () => {
     endDate: endDate ? moment(endDate).format("YYYY-MM-DD") : "",
   });
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const params = qs.stringify({
+      title,
+      priceFrom,
+      priceTo,
+      startDate,
+      endDate,
+    });
+    navigate(`${PRODUCT_PAGE}/?${params}`);
+  }, [currentPage, title, priceFrom, priceTo, startDate, endDate, navigate]);
 
   useEffect(() => {
     if (data) {

@@ -42,18 +42,12 @@ const DateFilter = memo(({ itsFrom }) => {
       itsFrom
         ? dispatch(changeStartDate(moment(date).format("YYYY-MM-DD")))
         : dispatch(changeEndDate(moment(date).format("YYYY-MM-DD")));
-      itsFrom
-        ? sessionStorage.setItem("date-from", moment(date).format("YYYY-MM-DD"))
-        : sessionStorage.setItem("date-to", moment(date).format("YYYY-MM-DD"));
     },
     [itsFrom, dispatch]
   );
 
   const handleResetDate = useCallback(() => {
     itsFrom ? dispatch(changeStartDate("")) : dispatch(changeEndDate(""));
-    itsFrom
-      ? sessionStorage.removeItem("date-from")
-      : sessionStorage.removeItem("date-to");
   }, [itsFrom, dispatch]);
 
   const DateCustomInput = forwardRef(({ value, onClick, placeholder }, ref) => (

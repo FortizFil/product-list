@@ -1,11 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
+import qs from "qs";
+
+const location = qs.parse(window.location.search,{ ignoreQueryPrefix: true });
 
 const initialState = {
-  title: sessionStorage.getItem("title") || "",
-  priceFrom: sessionStorage.getItem("price-from") || "",
-  priceTo: sessionStorage.getItem("price-to") || "",
-  startDate: sessionStorage.getItem("date-from") || "",
-  endDate: sessionStorage.getItem("date-to") || "",
+  title: location.title || "",
+  priceFrom: location.priceFrom || "",
+  priceTo: location.priceTo || "",
+  startDate: location.startDate || "",
+  endDate: location.endDate || "",
   currentPage: 1,
 };
 
@@ -48,7 +51,7 @@ export const {
   changeStartDate,
   changeEndDate,
   changeCurrentPage,
-  clearFilters
+  clearFilters,
 } = filtersSlice.actions;
 
 export default filtersSlice.reducer;
