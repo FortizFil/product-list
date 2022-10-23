@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { styled } from "@mui/material/styles";
@@ -19,10 +19,13 @@ const TitleFilter = () => {
 
   const dispatch = useDispatch();
 
-  const handleChange = (e) => {
-    dispatch(changeTitle(e.target.value));
-    sessionStorage.setItem("title", e.target.value);
-  };
+  const handleChange = useCallback(
+    (e) => {
+      dispatch(changeTitle(e.target.value));
+      sessionStorage.setItem("title", e.target.value);
+    },
+    [dispatch]
+  );
 
   return (
     <NameInput

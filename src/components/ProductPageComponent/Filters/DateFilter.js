@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react";
+import React, { useCallback, memo, forwardRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 
@@ -32,26 +32,29 @@ const CancelButton = styled(IconButton)(() => ({
   right: 0,
 }));
 
-const DateFilter = ({ itsFrom }) => {
+const DateFilter = memo(({ itsFrom }) => {
   const { endDate, startDate } = useSelector((state) => state.filters);
 
   const dispatch = useDispatch();
 
-  const handleChange = (date) => {
-    itsFrom
-      ? dispatch(changeStartDate(moment(date).format("YYYY-MM-DD")))
-      : dispatch(changeEndDate(moment(date).format("YYYY-MM-DD")));
-    itsFrom
-      ? sessionStorage.setItem("date-from", moment(date).format("YYYY-MM-DD"))
-      : sessionStorage.setItem("date-to", moment(date).format("YYYY-MM-DD"));
-  };
+  const handleChange = useCallback(
+    (date) => {
+      itsFrom
+        ? dispatch(changeStartDate(moment(date).format("YYYY-MM-DD")))
+        : dispatch(changeEndDate(moment(date).format("YYYY-MM-DD")));
+      itsFrom
+        ? sessionStorage.setItem("date-from", moment(date).format("YYYY-MM-DD"))
+        : sessionStorage.setItem("date-to", moment(date).format("YYYY-MM-DD"));
+    },
+    [itsFrom, dispatch]
+  );
 
-  const handleResetDate = () => {
+  const handleResetDate = useCallback(() => {
     itsFrom ? dispatch(changeStartDate("")) : dispatch(changeEndDate(""));
     itsFrom
       ? sessionStorage.removeItem("date-from")
       : sessionStorage.removeItem("date-to");
-  };
+  }, [itsFrom, dispatch]);
 
   const DateCustomInput = forwardRef(({ value, onClick, placeholder }, ref) => (
     <DateInput
@@ -98,5 +101,5 @@ const DateFilter = ({ itsFrom }) => {
       )}
     </>
   );
-};
+});
 export default DateFilter;

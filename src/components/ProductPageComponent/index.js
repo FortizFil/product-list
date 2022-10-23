@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import moment from "moment/moment";
 
@@ -60,7 +60,7 @@ const ProductPageComponent = () => {
     title: useDebounce(title, 500),
     priceFrom: useDebounce(priceFrom, 500),
     priceTo: useDebounce(priceTo, 500),
-    startDate: startDate,
+    startDate: startDate ? moment(startDate).format("YYYY-MM-DD") : "",
     endDate: endDate ? moment(endDate).format("YYYY-MM-DD") : "",
   });
   const dispatch = useDispatch();
@@ -72,9 +72,12 @@ const ProductPageComponent = () => {
     }
   }, [data]);
 
-  const handleChangePage = (event, value) => {
-    dispatch(changeCurrentPage(value));
-  };
+  const handleChangePage = useCallback(
+    (event, value) => {
+      dispatch(changeCurrentPage(value));
+    },
+    [dispatch]
+  );
 
   if (isLoading) {
     return <Loader />;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import Box from "@mui/material/Box";
@@ -47,7 +47,7 @@ const Header = () => {
   const dispatch = useDispatch();
   const [logOut] = useLogOutMutation();
 
-  const handleLogOut = () => {
+  const handleLogOut = useCallback(() => {
     try {
       logOut();
       localStorage.removeItem("token");
@@ -61,7 +61,7 @@ const Header = () => {
     } catch (error) {
       console.log(error);
     }
-  };
+  }, [logOut, dispatch]);
 
   return (
     <MainWrap>

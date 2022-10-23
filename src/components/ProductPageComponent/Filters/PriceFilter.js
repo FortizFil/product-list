@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { styled } from "@mui/material/styles";
@@ -14,19 +14,22 @@ const PriceInput = styled(OutlinedInput)(() => ({
   },
 }));
 
-const PriceFilter = ({ itsFrom }) => {
+const PriceFilter = memo(({ itsFrom }) => {
   const { priceFrom, priceTo } = useSelector((state) => state.filters);
 
   const dispatch = useDispatch();
 
-  const handleChange = (e) => {
-    itsFrom
-      ? dispatch(changePriceFrom(e.target.value))
-      : dispatch(changePriceTo(e.target.value));
-    itsFrom
-      ? sessionStorage.setItem("price-from", e.target.value)
-      : sessionStorage.setItem("price-to", e.target.value);
-  };
+  const handleChange = useCallback(
+    (e) => {
+      itsFrom
+        ? dispatch(changePriceFrom(e.target.value))
+        : dispatch(changePriceTo(e.target.value));
+      itsFrom
+        ? sessionStorage.setItem("price-from", e.target.value)
+        : sessionStorage.setItem("price-to", e.target.value);
+    },
+    [itsFrom, dispatch]
+  );
 
   return (
     <PriceInput
@@ -37,5 +40,5 @@ const PriceFilter = ({ itsFrom }) => {
       placeholder={itsFrom ? "Price from" : "Price to"}
     />
   );
-};
+});
 export default PriceFilter;

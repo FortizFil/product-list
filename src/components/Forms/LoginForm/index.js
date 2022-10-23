@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { useDispatch } from "react-redux";
 
 import { Form, Formik } from "formik";
@@ -72,26 +72,30 @@ const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [login] = useLoginMutation();
   const dispatch = useDispatch();
-  const handleMouseDownPassword = (e) => {
+
+  const handleMouseDownPassword = useCallback((e) => {
     e.preventDefault();
-  };
+  }, []);
 
-  const handleClickShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
+  const handleClickShowPassword = useCallback(() => {
+    setShowPassword((prev) => !prev);
+  }, []);
 
-  const submitForm = async (values) => {
-    dispatch(setError(null));
-    try {
-      const response = await login(values);
-      dispatch(saveUserInfo(response.data));
-      if (values.rememberMe) {
-        localStorage.setItem("token", response.data.access_token);
+  const submitForm = useCallback(
+    async (values) => {
+      dispatch(setError(null));
+      try {
+        const response = await login(values);
+        dispatch(saveUserInfo(response.data));
+        if (values.rememberMe) {
+          localStorage.setItem("token", response.data.access_token);
+        }
+      } catch (error) {
+        dispatch(setError("Internal server error. Please try again later"));
       }
-    } catch (error) {
-      dispatch(setError("Internal server error. Please try again later"));
-    }
-  };
+    },
+    [login, dispatch]
+  );
 
   return (
     <FormWrap>

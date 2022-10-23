@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
@@ -15,7 +15,7 @@ const Price = styled(Typography)(() => ({
   fontSize: "12px",
 }));
 
-const ProductCard = ({ product }) => {
+const ProductCard = memo(({ product }) => {
   return (
     <Card>
       <img
@@ -30,6 +30,6 @@ const ProductCard = ({ product }) => {
       </Box>
     </Card>
   );
-};
+});
 
 export default ProductCard;
